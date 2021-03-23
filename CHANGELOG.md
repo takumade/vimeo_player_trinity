@@ -4,6 +4,7 @@
 * Users can change control icons colors(play, pause, fullscreen)
 * Users can change video position
 * Users can change slider played and buffered color
+* Enhancement : Unify time units display (3 digits)
 
 ## [0.1.8] - Fixed bugs
 

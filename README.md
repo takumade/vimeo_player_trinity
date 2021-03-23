@@ -108,3 +108,8 @@ class VideoScreen extends StatelessWidget {
 | bufferedColor | Change slider buffered color         |Color  | null         | N
 | playedColor   | Change slider played color           |Color  | null         | N
 
+
+## Specials Thanks
+
+- [Алексей](https://github.com/aolychkin)
+- [Nipun Shah](https://github.com/nvshah)
