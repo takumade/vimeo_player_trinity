@@ -13,18 +13,20 @@ class VimeoPlayer extends StatefulWidget {
   final bool autoPlay;
   final bool looping;
   final int position;
+  final double videoPosition;
 
   VimeoPlayer({
     @required this.id,
     this.autoPlay,
     this.looping,
     this.position,
+    this.videoPosition,
     Key key,
   }) : super(key: key);
 
   @override
   _VimeoPlayerState createState() =>
-      _VimeoPlayerState(id, autoPlay, looping, position);
+      _VimeoPlayerState(id, autoPlay, looping, position, videoPosition);
 }
 
 class _VimeoPlayerState extends State<VimeoPlayer> {
@@ -33,13 +35,15 @@ class _VimeoPlayerState extends State<VimeoPlayer> {
   bool looping = false;
   bool _overlay = true;
   bool fullScreen = false;
+  double _videoPosition;
   int position;
 
-  _VimeoPlayerState(this._id, this.autoPlay, this.looping, this.position);
+  _VimeoPlayerState(this._id, this.autoPlay, this.looping, this.position, this._videoPosition);
 
   //Custom controller
   VideoPlayerController _controller;
   Future<void> initFuture;
+
 
   //Quality Class
   QualityLinks _quality;
@@ -94,6 +98,7 @@ class _VimeoPlayerState extends State<VimeoPlayer> {
   //Отрисовываем элементы плеера
   @override
   Widget build(BuildContext context) {
+    _videoPosition = _videoPosition == null ? 155 : _videoPosition;
     return Center(
         child: Stack(
       alignment: AlignmentDirectional.center,
@@ -136,7 +141,7 @@ class _VimeoPlayerState extends State<VimeoPlayer> {
                       Container(
                         height: videoHeight,
                         width: videoWidth,
-                        margin: EdgeInsets.only(left: videoMargin),
+                        margin: EdgeInsets.only(left: videoMargin, top: _videoPosition ),
                         child: VideoPlayer(_controller),
                       ),
                       _videoOverlay(),
@@ -318,7 +323,7 @@ class _VimeoPlayerState extends State<VimeoPlayer> {
               ),
               Container(
                 margin: EdgeInsets.only(
-                    top: videoHeight - 70, left: videoWidth + videoMargin - 50),
+                    top: videoHeight - 70 + _videoPosition, left: videoWidth + videoMargin - 50),
                 child: IconButton(
                     alignment: AlignmentDirectional.center,
                     icon: Icon(Icons.fullscreen, size: 30.0),
@@ -360,7 +365,7 @@ class _VimeoPlayerState extends State<VimeoPlayer> {
                     }),
               ),
               Container(
-                margin: EdgeInsets.only(left: videoWidth + videoMargin - 48),
+                margin: EdgeInsets.only(left: videoWidth + videoMargin - 48, top: _videoPosition),
                 child: IconButton(
                     icon: Icon(Icons.settings, size: 26.0),
                     onPressed: () {
