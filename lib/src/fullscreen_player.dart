@@ -15,7 +15,8 @@ class FullscreenPlayer extends StatefulWidget {
   final position;
   final Future<void> initFuture;
   final String qualityValue;
-  Color loaderColor;
+  final Color loaderColor;
+  final Color controlColor;
 
   FullscreenPlayer({
     @required this.id,
@@ -26,12 +27,13 @@ class FullscreenPlayer extends StatefulWidget {
     this.initFuture,
     this.qualityValue,
     this.loaderColor,
+    this.controlColor,
     Key key,
   }) : super(key: key);
 
   @override
   _FullscreenPlayerState createState() => _FullscreenPlayerState(
-      id, autoPlay, looping, controller, position, initFuture, qualityValue, loaderColor);
+      id, autoPlay, looping, controller, position, initFuture, qualityValue, loaderColor, controlColor);
 }
 
 class _FullscreenPlayerState extends State<FullscreenPlayer> {
@@ -41,6 +43,7 @@ class _FullscreenPlayerState extends State<FullscreenPlayer> {
   bool _overlay = true;
   bool fullScreen = true;
   Color _loaderColor;
+  Color _controlColor;
 
   VideoPlayerController controller;
   VideoPlayerController _controller;
@@ -51,7 +54,7 @@ class _FullscreenPlayerState extends State<FullscreenPlayer> {
   var qualityValue;
 
   _FullscreenPlayerState(this._id, this.autoPlay, this.looping, this.controller,
-      this.position, this.initFuture, this.qualityValue, this._loaderColor);
+      this.position, this.initFuture, this.qualityValue, this._loaderColor, this._controlColor);
 
   // Quality Class
   QualityLinks _quality;
@@ -334,8 +337,8 @@ class _FullscreenPlayerState extends State<FullscreenPlayer> {
                       bottom: videoHeight / 2 - 30,
                     ),
                     icon: _controller.value.isPlaying
-                        ? Icon(Icons.pause, size: 60.0)
-                        : Icon(Icons.play_arrow, size: 60.0),
+                        ? Icon(Icons.pause, size: 60.0, color: _controlColor)
+                        : Icon(Icons.play_arrow, size: 60.0, color: _controlColor,),
                     onPressed: () {
                       setState(() {
                         _controller.value.isPlaying
@@ -349,7 +352,7 @@ class _FullscreenPlayerState extends State<FullscreenPlayer> {
                     top: videoHeight - 80, left: videoWidth + videoMargin - 50),
                 child: IconButton(
                     alignment: AlignmentDirectional.center,
-                    icon: Icon(Icons.fullscreen, size: 30.0),
+                    icon: Icon(Icons.fullscreen, size: 30.0, color: _controlColor),
                     onPressed: () {
                       setState(() {
                         _controller.pause();
@@ -367,7 +370,7 @@ class _FullscreenPlayerState extends State<FullscreenPlayer> {
               Container(
                 margin: EdgeInsets.only(left: videoWidth + videoMargin - 48),
                 child: IconButton(
-                    icon: Icon(Icons.settings, size: 26.0),
+                    icon: Icon(Icons.settings, size: 26.0, color: _controlColor,),
                     onPressed: () {
                       position = _controller.value.position.inSeconds;
                       _seek = true;
