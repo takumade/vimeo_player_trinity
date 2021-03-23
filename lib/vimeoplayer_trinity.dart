@@ -14,6 +14,7 @@ class VimeoPlayer extends StatefulWidget {
   final bool looping;
   final int position;
   final double videoPosition;
+  final Color loaderColor;
 
   VimeoPlayer({
     @required this.id,
@@ -21,12 +22,13 @@ class VimeoPlayer extends StatefulWidget {
     this.looping,
     this.position,
     this.videoPosition,
+    this.loaderColor,
     Key key,
   }) : super(key: key);
 
   @override
   _VimeoPlayerState createState() =>
-      _VimeoPlayerState(id, autoPlay, looping, position, videoPosition);
+      _VimeoPlayerState(id, autoPlay, looping, position, videoPosition, loaderColor);
 }
 
 class _VimeoPlayerState extends State<VimeoPlayer> {
@@ -36,9 +38,10 @@ class _VimeoPlayerState extends State<VimeoPlayer> {
   bool _overlay = true;
   bool fullScreen = false;
   double _videoPosition;
+  Color _loaderColor;
   int position;
 
-  _VimeoPlayerState(this._id, this.autoPlay, this.looping, this.position, this._videoPosition);
+  _VimeoPlayerState(this._id, this.autoPlay, this.looping, this.position, this._videoPosition, this._loaderColor);
 
   //Custom controller
   VideoPlayerController _controller;
@@ -99,6 +102,7 @@ class _VimeoPlayerState extends State<VimeoPlayer> {
   @override
   Widget build(BuildContext context) {
     _videoPosition = _videoPosition == null ? 155 : _videoPosition;
+    _loaderColor = _loaderColor == null ? Colors.red : _loaderColor;
     return Center(
         child: Stack(
       alignment: AlignmentDirectional.center,
@@ -153,7 +157,7 @@ class _VimeoPlayerState extends State<VimeoPlayer> {
                       child: CircularProgressIndicator(
                         strokeWidth: 4,
                         valueColor:
-                            AlwaysStoppedAnimation<Color>(Color(0xFF22A3D2)),
+                            AlwaysStoppedAnimation<Color>(_loaderColor),
                       ));
                 }
               }),

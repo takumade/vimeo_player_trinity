@@ -15,6 +15,7 @@ class FullscreenPlayer extends StatefulWidget {
   final position;
   final Future<void> initFuture;
   final String qualityValue;
+  Color loaderColor;
 
   FullscreenPlayer({
     @required this.id,
@@ -24,12 +25,13 @@ class FullscreenPlayer extends StatefulWidget {
     this.position,
     this.initFuture,
     this.qualityValue,
+    this.loaderColor,
     Key key,
   }) : super(key: key);
 
   @override
   _FullscreenPlayerState createState() => _FullscreenPlayerState(
-      id, autoPlay, looping, controller, position, initFuture, qualityValue);
+      id, autoPlay, looping, controller, position, initFuture, qualityValue, loaderColor);
 }
 
 class _FullscreenPlayerState extends State<FullscreenPlayer> {
@@ -38,6 +40,7 @@ class _FullscreenPlayerState extends State<FullscreenPlayer> {
   bool looping = false;
   bool _overlay = true;
   bool fullScreen = true;
+  Color _loaderColor;
 
   VideoPlayerController controller;
   VideoPlayerController _controller;
@@ -48,7 +51,7 @@ class _FullscreenPlayerState extends State<FullscreenPlayer> {
   var qualityValue;
 
   _FullscreenPlayerState(this._id, this.autoPlay, this.looping, this.controller,
-      this.position, this.initFuture, this.qualityValue);
+      this.position, this.initFuture, this.qualityValue, this._loaderColor);
 
   // Quality Class
   QualityLinks _quality;
@@ -107,6 +110,7 @@ class _FullscreenPlayerState extends State<FullscreenPlayer> {
 
   @override
   Widget build(BuildContext context) {
+    _loaderColor = _loaderColor == null ? Colors.red : _loaderColor;
     return WillPopScope(
         onWillPop: _onWillPop,
         child: Scaffold(
@@ -176,8 +180,7 @@ class _FullscreenPlayerState extends State<FullscreenPlayer> {
                           heightFactor: 6,
                           child: CircularProgressIndicator(
                             strokeWidth: 4,
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                                Color(0xFF22A3D2)),
+                            valueColor: AlwaysStoppedAnimation<Color>(_loaderColor),
                           ));
                     }
                   }),
