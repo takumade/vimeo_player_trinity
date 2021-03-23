@@ -104,7 +104,7 @@ class VideoScreen extends StatelessWidget {
 | autoPlay      | Auto play video                      |bool   | null         | Y
 | controlColor  | Change color of control icons        |Color  | Color.red    | N
 | loaderColor   | Change color of circular indicator   |Color  | Colors.red   | N
-| videoPosition | Change video position                |double | 155          | N
+| videoPosition | Change video position                |double | 179          | N
 | bufferedColor | Change slider buffered color         |Color  | null         | N
 | playedColor   | Change slider played color           |Color  | null         | N
 

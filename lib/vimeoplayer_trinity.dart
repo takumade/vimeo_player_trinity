@@ -111,7 +111,7 @@ class _VimeoPlayerState extends State<VimeoPlayer> {
   //Отрисовываем элементы плеера
   @override
   Widget build(BuildContext context) {
-    _videoPosition = _videoPosition == null ? 155 : _videoPosition;
+    _videoPosition = _videoPosition == null ? 179 : _videoPosition;
     _loaderColor = _loaderColor == null ? Colors.red : _loaderColor;
     return Center(
         child: Stack(

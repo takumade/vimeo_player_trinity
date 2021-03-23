@@ -1,6 +1,6 @@
 name: vimeoplayer_trinity
 description: A new Flutter package for playing any videos from Vimeo by id.
-version: 0.1.8
+version: 0.1.9
 homepage: https://github.com/blackgeneration/vimeo_player_trinity
 
 environment:
