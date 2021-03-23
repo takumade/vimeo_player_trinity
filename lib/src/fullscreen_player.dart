@@ -17,6 +17,8 @@ class FullscreenPlayer extends StatefulWidget {
   final String qualityValue;
   final Color loaderColor;
   final Color controlColor;
+  final Color bufferedColor;
+  final Color playedColor;
 
   FullscreenPlayer({
     @required this.id,
@@ -28,12 +30,14 @@ class FullscreenPlayer extends StatefulWidget {
     this.qualityValue,
     this.loaderColor,
     this.controlColor,
+    this.bufferedColor,
+    this.playedColor,
     Key key,
   }) : super(key: key);
 
   @override
   _FullscreenPlayerState createState() => _FullscreenPlayerState(
-      id, autoPlay, looping, controller, position, initFuture, qualityValue, loaderColor, controlColor);
+      id, autoPlay, looping, controller, position, initFuture, qualityValue, loaderColor, controlColor, bufferedColor, playedColor);
 }
 
 class _FullscreenPlayerState extends State<FullscreenPlayer> {
@@ -44,6 +48,8 @@ class _FullscreenPlayerState extends State<FullscreenPlayer> {
   bool fullScreen = true;
   Color _loaderColor;
   Color _controlColor;
+  Color _bufferedColor;
+  Color _playedColor;
 
   VideoPlayerController controller;
   VideoPlayerController _controller;
@@ -54,7 +60,7 @@ class _FullscreenPlayerState extends State<FullscreenPlayer> {
   var qualityValue;
 
   _FullscreenPlayerState(this._id, this.autoPlay, this.looping, this.controller,
-      this.position, this.initFuture, this.qualityValue, this._loaderColor, this._controlColor);
+      this.position, this.initFuture, this.qualityValue, this._loaderColor, this._controlColor, this._bufferedColor, this._playedColor);
 
   // Quality Class
   QualityLinks _quality;
@@ -400,32 +406,26 @@ class _FullscreenPlayerState extends State<FullscreenPlayer> {
               Container(
                 width: 46,
                 alignment: Alignment(0, 0),
-                child: Text(value.position.inMinutes.toString() +
-                    ':' +
-                    (value.position.inSeconds - value.position.inMinutes * 60)
-                        .toString()),
+                child: Text('${_asTwoDigits(value.position.inMinutes)}:${_asTwoDigits(value.position.inSeconds - value.position.inMinutes * 60)}'),
               ),
               Container(
                 height: 20,
-                width: videoWidth - 92,
+                width: videoWidth - 120,
                 child: VideoProgressIndicator(
                   _controller,
                   allowScrubbing: true,
                   colors: VideoProgressColors(
-                    playedColor: Color(0xFF22A3D2),
+                    playedColor: _playedColor,
                     backgroundColor: Color(0x5515162B),
-                    bufferedColor: Color(0x5583D8F7),
+                    bufferedColor: _bufferedColor,
                   ),
                   padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
                 ),
               ),
               Container(
-                width: 46,
+                width: 60,
                 alignment: Alignment(0, 0),
-                child: Text(value.duration.inMinutes.toString() +
-                    ':' +
-                    (value.duration.inSeconds - value.duration.inMinutes * 60)
-                        .toString()),
+                child: Text(_formatDuration(value.duration.inSeconds),),
               ),
             ],
           );
@@ -435,4 +435,15 @@ class _FullscreenPlayerState extends State<FullscreenPlayer> {
       },
     );
   }
+
+
+  String _formatDuration(int seconds){
+    int secondsLeft = (seconds % 60).toInt();
+    int minutes = (seconds / 60).toInt();
+    int hours = (minutes/60).toInt();
+    int minutesLeft = minutes - (hours * 60);
+    return "$hours: $minutesLeft : $secondsLeft";
+  }
+
+  String _asTwoDigits(int n) => n?.toString()?.padLeft(2, '0') ?? '';
 }

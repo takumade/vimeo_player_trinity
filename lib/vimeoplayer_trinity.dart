@@ -16,6 +16,8 @@ class VimeoPlayer extends StatefulWidget {
   final double videoPosition;
   final Color loaderColor;
   final Color controlColor;
+  final Color playedColor;
+  final Color bufferedColor;
 
 
   VimeoPlayer({
@@ -26,12 +28,14 @@ class VimeoPlayer extends StatefulWidget {
     this.videoPosition,
     this.loaderColor,
     this.controlColor,
+    this.playedColor,
+    this.bufferedColor,
     Key key,
   }) : super(key: key);
 
   @override
   _VimeoPlayerState createState() =>
-      _VimeoPlayerState(id, autoPlay, looping, position, videoPosition, loaderColor, controlColor);
+      _VimeoPlayerState(id, autoPlay, looping, position, videoPosition, loaderColor, controlColor, bufferedColor, playedColor);
 }
 
 class _VimeoPlayerState extends State<VimeoPlayer> {
@@ -43,9 +47,11 @@ class _VimeoPlayerState extends State<VimeoPlayer> {
   double _videoPosition;
   Color _loaderColor;
   Color _controlColor;
+  Color _playedColor;
+  Color _bufferedColor;
   int position;
 
-  _VimeoPlayerState(this._id, this.autoPlay, this.looping, this.position, this._videoPosition, this._loaderColor, this._controlColor);
+  _VimeoPlayerState(this._id, this.autoPlay, this.looping, this.position, this._videoPosition, this._loaderColor, this._controlColor,this._bufferedColor, this._playedColor);
 
   //Custom controller
   VideoPlayerController _controller;
@@ -357,7 +363,9 @@ class _VimeoPlayerState extends State<VimeoPlayer> {
                                       initFuture: initFuture,
                                       qualityValue: _qualityValue, 
                                       controlColor: _controlColor, 
-                                      loaderColor: _loaderColor),
+                                      loaderColor: _loaderColor, 
+                                      bufferedColor: _bufferedColor,
+                                      playedColor: _playedColor,),
                               transitionsBuilder: (___,
                                   Animation<double> animation,
                                   ____,
@@ -402,9 +410,9 @@ class _VimeoPlayerState extends State<VimeoPlayer> {
                 _controller,
                 allowScrubbing: true,
                 colors: VideoProgressColors(
-                  playedColor: Color(0xFF22A3D2),
+                  playedColor: _playedColor,
                   backgroundColor: Color(0x5515162B),
-                  bufferedColor: Color(0x5583D8F7),
+                  bufferedColor: _bufferedColor,
                 ),
                 padding: EdgeInsets.only(top: 2),
               ),
@@ -423,32 +431,26 @@ class _VimeoPlayerState extends State<VimeoPlayer> {
               Container(
                 width: 46,
                 alignment: Alignment(0, 0),
-                child: Text(value.position.inMinutes.toString() +
-                    ':' +
-                    (value.position.inSeconds - value.position.inMinutes * 60)
-                        .toString()),
+                child: Text('${_asTwoDigits(value.position.inMinutes)}:${_asTwoDigits(value.position.inSeconds - value.position.inMinutes * 60)}'),
               ),
               Container(
                 height: 20,
-                width: videoWidth - 92,
+                width: videoWidth - 120,
                 child: VideoProgressIndicator(
                   _controller,
                   allowScrubbing: true,
                   colors: VideoProgressColors(
                     playedColor: Color(0xFF22A3D2),
                     backgroundColor: Color(0x5515162B),
-                    bufferedColor: Color(0x5583D8F7),
+                    bufferedColor: _bufferedColor,
                   ),
                   padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
                 ),
               ),
               Container(
-                width: 46,
+                width: 60,
                 alignment: Alignment(0, 0),
-                child: Text(value.duration.inMinutes.toString() +
-                    ':' +
-                    (value.duration.inSeconds - value.duration.inMinutes * 60)
-                        .toString()),
+                child: Text(_formatDuration(value.duration.inSeconds)),
               ),
             ],
           );
@@ -457,6 +459,16 @@ class _VimeoPlayerState extends State<VimeoPlayer> {
         }
       },
     );
+  }
+
+  String _asTwoDigits(int n) => n?.toString()?.padLeft(2, '0') ?? '';
+
+  String _formatDuration(int seconds){
+    int secondsLeft = (seconds % 60).toInt();
+    int minutes = (seconds / 60).toInt();
+    int hours = (minutes/60).toInt();
+    int minutesLeft = minutes - (hours * 60);
+    return "$hours: $minutesLeft : $secondsLeft";
   }
 
   @override

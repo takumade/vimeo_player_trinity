@@ -1,6 +1,6 @@
 # vimeoplayer
 
-A new Flutter package for playing any videos from Vimeo by id. 
+A new Flutter package for playing any videos from Vimeo by id. Forked from [prilogy/vimeo_player](https://github.com/prilogy/vimeo_player) 
 
 Functions:
 * Download video from link
@@ -89,8 +89,22 @@ class VideoScreen extends StatelessWidget {
                 preferredSize: Size(0.0, 0.0),
               ),
         body: ListView(children: <Widget>[
-          VimeoPlayer(id: '395212534', autoPlay: true),
+          VimeoPlayer(id: '395212534', autoPlay: true, loaderColor: Colors.pink),
         ]));
   }
 }
 ```
+
+
+## Options
+
+| Option        | Desc                                 | Type  |Default Value | Required
+|---------------|--------------------------------------|-------|--------------|-------
+| id            | Vimeo video id                       |String | ""           | Y
+| autoPlay      | Auto play video                      |bool   | null         | Y
+| controlColor  | Change color of control icons        |Color  | Color.red    | N
+| loaderColor   | Change color of circular indicator   |Color  | Colors.red   | N
+| videoPosition | Change video position                |double | 155          | N
+| bufferedColor | Change slider buffered color         |Color  | null         | N
+| playedColor   | Change slider played color           |Color  | null         | N
+

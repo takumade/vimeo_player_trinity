@@ -1,3 +1,10 @@
+## [0.1.9] - Added new features
+
+### New features
+* Users can change control icons colors(play, pause, fullscreen)
+* Users can change video position
+* Users can change slider played and buffered color
+
 ## [0.1.8] - Fixed bugs
 
 ### Fixed
