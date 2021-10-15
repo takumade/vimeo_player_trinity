@@ -115,25 +115,25 @@ class VideoScreen extends StatelessWidget {
 <table>
    <tr>
       <td>
-         <img width="250px" src="screenshots/1.jpg">
+         <img width="250px" src="https://raw.githubusercontent.com/takumade/vimeo_player_trinity/main/screenshots/1.jpg">
       </td>
       <td>
-         <img width="250px" src="screenshots/2.jpg">
+         <img width="250px" src="https://raw.githubusercontent.com/takumade/vimeo_player_trinity/main/screenshots/2.jpg">
       </td>
       <td>
-         <img width="250px" src="screenshots/3.jpg">
+         <img width="250px" src="https://raw.githubusercontent.com/takumade/vimeo_player_trinity/main/screenshots/3.jpg">
       </td>
       <td>
-         <img width="250px" src="screenshots/4.jpg">
+         <img width="250px" src="https://raw.githubusercontent.com/takumade/vimeo_player_trinity/main/screenshots/4.jpg">
       </td>
       <td>
-         <img width="250px" src="screenshots/5.jpg">
+         <img width="250px" src="https://raw.githubusercontent.com/takumade/vimeo_player_trinity/main/screenshots/5.jpg">
       </td>
       
    </tr>
 
   
-   <img  src="screenshots/7.jpg">
+   <img  src="https://raw.githubusercontent.com/takumade/vimeo_player_trinity/main/screenshots/7.jpg">
 
    
   </table>
