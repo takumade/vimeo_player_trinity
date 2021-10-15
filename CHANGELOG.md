@@ -1,3 +1,17 @@
+## [0.2.1] - Added new features
+
+### New features
+* Replaced Chewie with BetterPlayer
+* Users can change resolution, volume of video
+* Can can also rewind and forward video
+* Users can change starting progrees indicator color
+
+
+## [0.2.0] - 2020-04-01 #
+* Supports null safety.
+* Uses Chewie player
+
+
 ## [0.1.9] - Added new features
 
 ### New features

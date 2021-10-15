@@ -1,14 +1,16 @@
-# vimeoplayer
+# Vimeo Player Trinity
+[![pub package](https://img.shields.io/pub/v/better_player.svg)](https://pub.dartlang.org/packages/better_player)
+[![pub package](https://img.shields.io/github/license/jhomlala/betterplayer.svg?style=flat)](https://github.com/jhomlala/betterplayer)
+[![pub package](https://img.shields.io/badge/platform-flutter-blue.svg)](https://github.com/jhomlala/betterplayer)
 
-A new Flutter package for playing any videos from Vimeo by id. Forked from [prilogy/vimeo_player](https://github.com/prilogy/vimeo_player) 
+A Flutter package for playing any videos from Vimeo by id. Forked from [prilogy/vimeo_player](https://github.com/prilogy/vimeo_player) 
 
 Functions:
-* Download video from link
 * Quality change
 * Responsive full screen
 * Pause and play
 * Rewind
-* Double tap rewind
+* Playback speed
 
 ## Getting Started
 
@@ -104,12 +106,44 @@ class VideoScreen extends StatelessWidget {
 | autoPlay      | Auto play video                      |bool   | null         | Y
 | controlColor  | Change color of control icons        |Color  | Color.red    | N
 | loaderColor   | Change color of circular indicator   |Color  | Colors.red   | N
-| videoPosition | Change video position                |double | 179          | N
-| bufferedColor | Change slider buffered color         |Color  | null         | N
-| playedColor   | Change slider played color           |Color  | null         | N
+| loaderBackgroundColor  | Change background color of circular indicator   |Color  | Colors.blue  | N
+| controlsConfig   | Change color, icons and behavior of controls   |ControlsConfig  | ControlsConfig()   | N
+
+
+## Screenshots
+
+<table>
+   <tr>
+      <td>
+         <img width="250px" src="screenshots/1.jpg">
+      </td>
+      <td>
+         <img width="250px" src="screenshots/2.jpg">
+      </td>
+      <td>
+         <img width="250px" src="screenshots/3.jpg">
+      </td>
+      <td>
+         <img width="250px" src="screenshots/4.jpg">
+      </td>
+      <td>
+         <img width="250px" src="screenshots/5.jpg">
+      </td>
+      
+   </tr>
+
+  
+   <img  src="screenshots/7.jpg">
+
+   
+  </table>
+
 
 
 ## Specials Thanks
 
 - [Алексей](https://github.com/aolychkin)
 - [Nipun Shah](https://github.com/nvshah)
+- [trustmefelix](https://github.com/trustmefelix)
+- [felixmcy](https://github.com/felixmcy)
+- [takumade](https://github.com/takumade)
