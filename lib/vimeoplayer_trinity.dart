@@ -17,6 +17,8 @@ class VimeoPlayer extends StatefulWidget {
   final bool looping;
 
   /// Start playing in fullscreen.default is false
+  final bool fullScreenByDefault;
+
   final bool allowFullScreen;
 
   /// Configure controls
@@ -28,16 +30,17 @@ class VimeoPlayer extends StatefulWidget {
   /// Progress indicator background color
   final Color? loaderBackgroundColor;
 
-  VimeoPlayer({
+  const VimeoPlayer({
     required this.id,
     this.autoPlay = false,
     this.looping = false,
     this.controlsConfig,
-    this.loaderColor,
+    this.loaderColor = Colors.white,
     this.loaderBackgroundColor,
+    this.fullScreenByDefault = false,
     this.allowFullScreen = false,
     Key? key,
-  })  : assert(id != null && allowFullScreen != null),
+  })  : assert(id != null, 'Video ID can not be null'),
         super(key: key);
 
   @override
@@ -46,23 +49,22 @@ class VimeoPlayer extends StatefulWidget {
 
 class _VimeoPlayerState extends State<VimeoPlayer> {
   int? position;
-  bool fullScreen = false;
+  bool fullScreenByDefault = false;
 
   //Quality Class
   late QualityLinks _quality;
-  var _qualityValue;
   BetterPlayerController? _betterPlayerController;
 
   @override
   void initState() {
-    fullScreen = widget.allowFullScreen;
+    fullScreenByDefault = widget.fullScreenByDefault;
 
     //Create class
     _quality = QualityLinks(widget.id);
 
     //Initializing video controllers when receiving data from Vimeo
     _quality.getQualitiesSync().then((value) {
-      _qualityValue = value[value.lastKey()];
+      final _qualityValue = value[value.lastKey()];
 
       // Create resolutions map
       Map<String, String> resolutionsMap = {};
@@ -72,20 +74,27 @@ class _VimeoPlayerState extends State<VimeoPlayer> {
       });
 
       BetterPlayerDataSource betterPlayerDataSource = BetterPlayerDataSource(
-          BetterPlayerDataSourceType.network, _qualityValue,
-          resolutions: resolutionsMap);
+        BetterPlayerDataSourceType.network,
+        _qualityValue,
+        resolutions: resolutionsMap,
+      );
 
       setState(() {
         _betterPlayerController = BetterPlayerController(
-            BetterPlayerConfiguration(
-              autoPlay: widget.autoPlay,
-              looping: widget.looping,
+          BetterPlayerConfiguration(
+            autoPlay: widget.autoPlay,
+            looping: widget.looping,
+            fullScreenByDefault: fullScreenByDefault,
+            controlsConfiguration:
+                widget.controlsConfig == null ? ControlsConfig() : widget.controlsConfig as ControlsConfig,
               fullScreenByDefault: fullScreen,
               controlsConfiguration: widget.controlsConfig == null
                   ? ControlsConfig()
                   : widget.controlsConfig as ControlsConfig,
-            ),
-            betterPlayerDataSource: betterPlayerDataSource);
+            autoDetectFullscreenAspectRatio: true,
+          ),
+          betterPlayerDataSource: betterPlayerDataSource,
+        );
       });
 
       //Update orientation and rebuilding page
@@ -109,7 +118,7 @@ class _VimeoPlayerState extends State<VimeoPlayer> {
     return Center(
       child: _betterPlayerController == null
           ? CircularProgressIndicator(
-              color: widget.loaderColor,
+                color: widget.loaderColor,
               backgroundColor: widget.loaderBackgroundColor)
           : AspectRatio(
               aspectRatio: 16 / 9,
@@ -117,7 +126,7 @@ class _VimeoPlayerState extends State<VimeoPlayer> {
                 controller: _betterPlayerController as BetterPlayerController,
               ),
             ),
-    );
+          );
   }
 
   @override
