@@ -115,17 +115,18 @@ class _VimeoPlayerState extends State<VimeoPlayer> {
   //Build player element
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: _betterPlayerController == null
-          ? CircularProgressIndicator(
+    return _betterPlayerController == null
+        ? AspectRatio(
+            aspectRatio: 16 / 9,
+            child: Center(
+              child: CircularProgressIndicator(
                 color: widget.loaderColor,
-              backgroundColor: widget.loaderBackgroundColor)
-          : AspectRatio(
-              aspectRatio: 16 / 9,
-              child: BetterPlayer(
-                controller: _betterPlayerController as BetterPlayerController,
+                backgroundColor: widget.loaderBackgroundColor,
               ),
             ),
+          )
+        : BetterPlayer(
+            controller: _betterPlayerController!,
           );
   }
 
