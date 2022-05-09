@@ -19,7 +19,8 @@ class VimeoPlayer extends StatefulWidget {
   /// Start playing in fullscreen.default is false
   final bool fullScreenByDefault;
 
-  final bool allowFullScreen;
+  /// Video fit in fullscreen mode
+  final BoxFit fullscreenVideoFit;
 
   /// Configure controls
   final ControlsConfig? controlsConfig;
@@ -38,7 +39,7 @@ class VimeoPlayer extends StatefulWidget {
     this.loaderColor = Colors.white,
     this.loaderBackgroundColor,
     this.fullScreenByDefault = false,
-    this.allowFullScreen = false,
+    this.fullscreenVideoFit = BoxFit.contain,
     Key? key,
   })  : assert(id != null, 'Video ID can not be null'),
         super(key: key);
@@ -87,10 +88,7 @@ class _VimeoPlayerState extends State<VimeoPlayer> {
             fullScreenByDefault: fullScreenByDefault,
             controlsConfiguration:
                 widget.controlsConfig == null ? ControlsConfig() : widget.controlsConfig as ControlsConfig,
-              fullScreenByDefault: fullScreen,
-              controlsConfiguration: widget.controlsConfig == null
-                  ? ControlsConfig()
-                  : widget.controlsConfig as ControlsConfig,
+            fit: widget.fullscreenVideoFit,
             autoDetectFullscreenAspectRatio: true,
           ),
           betterPlayerDataSource: betterPlayerDataSource,
