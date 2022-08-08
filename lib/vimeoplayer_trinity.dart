@@ -107,8 +107,9 @@ class _VimeoPlayerState extends State<VimeoPlayer> {
             autoPlay: widget.autoPlay,
             looping: widget.looping,
             fullScreenByDefault: fullScreenByDefault,
-            controlsConfiguration:
-                widget.controlsConfig == null ? ControlsConfig() : widget.controlsConfig as ControlsConfig,
+            controlsConfiguration: widget.controlsConfig == null
+                ? ControlsConfig()
+                : widget.controlsConfig as ControlsConfig,
             fit: widget.fullscreenVideoFit,
             autoDetectFullscreenAspectRatio: true,
             deviceOrientationsOnFullScreen:
