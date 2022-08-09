@@ -39,6 +39,19 @@ Add the following entry to your `Info.plist` file, located in `<project root>/io
 ```
 This entry allows your app to access video files by URL.
 
+Additional iOS configuration **(Optional)**
+
+Add this into your info.plist file to support full screen rotation (The Player will rotate screen to horizontal position when full screen is enabled):
+
+```
+<key>UISupportedInterfaceOrientations</key>
+<array>
+   <string>UIInterfaceOrientationPortrait</string>
+   <string>UIInterfaceOrientationLandscapeLeft</string>
+   <string>UIInterfaceOrientationLandscapeRight</string>
+</array>
+```
+
 ## Android
 Ensure the following permission is present in your Android Manifest file, located in `<project root>/android/app/src/main/AndroidManifest.xml`:
 
