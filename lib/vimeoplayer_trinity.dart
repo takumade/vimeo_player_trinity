@@ -2,6 +2,7 @@ library vimeoplayer;
 
 import 'package:better_player/better_player.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:vimeoplayer_trinity/src/controls_config.dart';
 import 'src/quality_links.dart';
 
@@ -31,6 +32,15 @@ class VimeoPlayer extends StatefulWidget {
   /// Progress indicator background color
   final Color? loaderBackgroundColor;
 
+  /// Defines the set of allowed device orientations on entering fullscreen
+  final List<DeviceOrientation> deviceOrientationsOnFullScreen;
+
+  /// Defines the set of allowed device orientations after exiting fullscreen
+  final List<DeviceOrientation> deviceOrientationsAfterFullScreen;
+
+  /// Defines if player should auto detect full screen device orientation based on aspect ratio of the video. If aspect ratio of the video is < 1 then video will played in full screen in portrait mode. If aspect ratio is >= 1 then video will be played horizontally. If this parameter is true, then [deviceOrientationsOnFullScreen] and [fullScreenAspectRatio] value will be ignored.
+  final bool autoDetectFullscreenDeviceOrientation;
+
   const VimeoPlayer({
     required this.id,
     this.autoPlay = false,
@@ -40,6 +50,17 @@ class VimeoPlayer extends StatefulWidget {
     this.loaderBackgroundColor,
     this.fullScreenByDefault = false,
     this.fullscreenVideoFit = BoxFit.contain,
+    this.deviceOrientationsOnFullScreen = const [
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ],
+    this.deviceOrientationsAfterFullScreen = const [
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ],
+    this.autoDetectFullscreenDeviceOrientation = false,
     Key? key,
   })  : assert(id != null, 'Video ID can not be null'),
         super(key: key);
@@ -86,10 +107,17 @@ class _VimeoPlayerState extends State<VimeoPlayer> {
             autoPlay: widget.autoPlay,
             looping: widget.looping,
             fullScreenByDefault: fullScreenByDefault,
-            controlsConfiguration:
-                widget.controlsConfig == null ? ControlsConfig() : widget.controlsConfig as ControlsConfig,
+            controlsConfiguration: widget.controlsConfig == null
+                ? ControlsConfig()
+                : widget.controlsConfig as ControlsConfig,
             fit: widget.fullscreenVideoFit,
             autoDetectFullscreenAspectRatio: true,
+            deviceOrientationsOnFullScreen:
+                widget.deviceOrientationsOnFullScreen,
+            deviceOrientationsAfterFullScreen:
+                widget.deviceOrientationsAfterFullScreen,
+            autoDetectFullscreenDeviceOrientation:
+                widget.autoDetectFullscreenDeviceOrientation,
           ),
           betterPlayerDataSource: betterPlayerDataSource,
         );
