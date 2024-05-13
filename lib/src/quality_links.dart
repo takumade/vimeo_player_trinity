@@ -5,8 +5,6 @@ import 'dart:convert';
 import 'dart:async';
 import "dart:collection";
 
-//throw UnimplementedError();
-
 class QualityLinks {
   String? videoId;
 
@@ -18,16 +16,42 @@ class QualityLinks {
 
   Future<SplayTreeMap?> getQualitiesAsync() async {
     try {
-      final Uri? vimeoLink =
+      final vimeoLink =
           Uri.tryParse('https://player.vimeo.com/video/${videoId!}/config');
       var response = await http.get(vimeoLink!);
-      var jsonData =
-          jsonDecode(response.body)['request']['files']['progressive'];
-      SplayTreeMap videoList = SplayTreeMap.fromIterable(
-        jsonData,
-        key: (item) => "${item['quality']} ${item['fps']}",
-        value: (item) => item['url'],
-      );
+
+      final jsonData = jsonDecode(response.body)['request']['files'];
+      final dashData = jsonData['dash'];
+      final hlsData = jsonData['hls'];
+      final defaultCDN = hlsData['default_cdn'];
+      final cdnVideoUrl = (hlsData['cdns'][defaultCDN]['url'] as String?) ?? '';
+      final rawStreamUrls =
+          (dashData['streams'] as List<dynamic>?) ?? <dynamic>[];
+
+      final sepList = cdnVideoUrl.split('/sep/video/');
+      final firstUrlPiece = sepList.firstOrNull ?? '';
+      final lastUrlPiece = ((sepList.lastOrNull ?? '').split('/').lastOrNull) ??
+          (sepList.lastOrNull ?? '');
+
+      final SplayTreeMap videoList = SplayTreeMap();
+
+      for (final item in rawStreamUrls) {
+        final urlId =
+            ((item['id'] ?? '') as String).split('-').firstOrNull ?? '';
+
+        videoList.putIfAbsent(
+          "${item['quality']} ${item['fps']}",
+          () => '$firstUrlPiece/sep/video/$urlId/$lastUrlPiece',
+        );
+      }
+
+      if (videoList.isEmpty) {
+        videoList.putIfAbsent(
+          '720 30',
+          () => cdnVideoUrl,
+        );
+      }
+
       return videoList;
     } catch (error) {
       log('=====> REQUEST ERROR: $error');
