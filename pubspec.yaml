@@ -4,16 +4,16 @@ version: 0.2.1
 homepage: https://github.com/blackgeneration/vimeo_player_trinity
 
 environment:
-  sdk: ">=2.16.2 <3.0.0"
+  sdk: '>=3.3.3 <4.0.0'
 
 dependencies:
-  better_player: ^0.0.82
+  better_player: ^0.0.83
   flutter:
     sdk: flutter
-  http: ^0.13.4
+  http: ^1.2.1
 
 dev_dependencies:
-  flutter_lints: ^1.0.4
+  flutter_lints: ^4.0.0
   flutter_test:
     sdk: flutter
 

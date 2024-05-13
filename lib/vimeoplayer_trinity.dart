@@ -61,12 +61,11 @@ class VimeoPlayer extends StatefulWidget {
       DeviceOrientation.landscapeRight,
     ],
     this.autoDetectFullscreenDeviceOrientation = false,
-    Key? key,
-  })  : assert(id != null, 'Video ID can not be null'),
-        super(key: key);
+    super.key,
+  }) : assert(id != null, 'Video ID can not be null');
 
   @override
-  _VimeoPlayerState createState() => _VimeoPlayerState();
+  State<VimeoPlayer> createState() => _VimeoPlayerState();
 }
 
 class _VimeoPlayerState extends State<VimeoPlayer> {
@@ -86,7 +85,7 @@ class _VimeoPlayerState extends State<VimeoPlayer> {
 
     //Initializing video controllers when receiving data from Vimeo
     _quality.getQualitiesSync().then((value) {
-      final _qualityValue = value[value.lastKey()];
+      final qualityValue = value[value.lastKey()];
 
       // Create resolutions map
       Map<String, String> resolutionsMap = {};
@@ -97,7 +96,7 @@ class _VimeoPlayerState extends State<VimeoPlayer> {
 
       BetterPlayerDataSource betterPlayerDataSource = BetterPlayerDataSource(
         BetterPlayerDataSourceType.network,
-        _qualityValue,
+        qualityValue,
         resolutions: resolutionsMap,
       );
 

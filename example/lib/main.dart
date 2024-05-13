@@ -29,8 +29,8 @@ class VideoScreen extends StatelessWidget {
               centerTitle: true,
             )
           : null,
-      body: Column(
-        children: const [
+      body: const Column(
+        children: [
           VimeoPlayer(
             id: '395212534',
             autoPlay: true,
