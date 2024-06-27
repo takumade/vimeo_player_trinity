@@ -1,3 +1,10 @@
+
+## [0.3.0] - Adapt config to latest Vimeo API changes
+
+* fix: 🔧 adapt video config parsing to latest vimeo api changes
+* build: ⬆️ upgrade project and dependencies
+
+
 ## [0.2.1] - Added new features
 
 ### New features

@@ -153,8 +153,9 @@ class VideoScreen extends StatelessWidget {
 
 
 
-## Specials Thanks
+## Specials Thanks To
 
+- [Moaz El Sawaf](https://github.com/moazelsawaf)
 - [Алексей](https://github.com/aolychkin)
 - [Nipun Shah](https://github.com/nvshah)
 - [trustmefelix](https://github.com/trustmefelix)
